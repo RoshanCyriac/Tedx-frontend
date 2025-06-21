@@ -1,0 +1,45 @@
+{
+  "name": "tedx-auth-frontend",
+  "version": "1.0.0",
+  "description": "A modern, responsive frontend for TEDx Authentication Service",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "serve": "npx http-server -p 8080 -c-1",
+    "serve-php": "php -S localhost:8080",
+    "dev": "npx live-server --port=8080 --host=localhost",
+    "build": "echo 'No build step required for static files'",
+    "render-build": "echo 'Static site - no build required'",
+    "deploy": "echo 'Deploy the frontend folder to your hosting provider'"
+  },
+  "keywords": [
+    "tedx",
+    "authentication",
+    "frontend",
+    "oauth",
+    "admin-panel",
+    "responsive"
+  ],
+  "author": "TEDx Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/tedx-auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/tedx-auth/issues"
+  },
+  "homepage": "https://github.com/your-username/tedx-auth#readme",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+} 

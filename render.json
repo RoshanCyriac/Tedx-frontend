@@ -1,0 +1,28 @@
+{
+  "services": [
+    {
+      "type": "static_site",
+      "name": "tedx-auth-frontend",
+      "env": "static",
+      "buildCommand": "",
+      "staticPublishPath": ".",
+      "headers": [
+        {
+          "path": "/*",
+          "headers": {
+            "X-Frame-Options": "DENY",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          }
+        }
+      ],
+      "redirects": [
+        {
+          "source": "/*",
+          "destination": "/index.html",
+          "type": "rewrite"
+        }
+      ]
+    }
+  ]
+} 

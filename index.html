@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEDx Authentication Portal</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+                <h1>TEDx Auth Portal</h1>
+            </div>
+            <div class="theme-toggle">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div id="auth-status" class="auth-status"></div>
+
+            <!-- Login/Signup Forms -->
+            <div id="auth-forms" class="auth-forms">
+                <div class="form-container">
+                    <div class="form-tabs">
+                        <button class="tab-btn active" data-tab="login">Login</button>
+                        <button class="tab-btn" data-tab="signup">Sign Up</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="login-form" class="form-content active">
+                        <h2>Welcome Back</h2>
+                        <p class="form-subtitle">Sign in to your account</p>
+                        
+                        <form class="auth-form">
+                            <div class="form-group">
+                                <label for="login-email">
+                                    <i class="fas fa-envelope"></i>
+                                    Email Address
+                                </label>
+                                <input type="email" id="login-email" required placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">
+                                    <i class="fas fa-lock"></i>
+                                    Password
+                                </label>
+                                <input type="password" id="login-password" required placeholder="Enter your password">
+                            </div>
+                            <button type="button" onclick="login()" class="btn btn-primary">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Sign In
+                            </button>
+                        </form>
+
+                        <div class="divider">
+                            <span>or</span>
+                        </div>
+
+                        <button onclick="googleSignIn()" class="btn btn-google">
+                            <i class="fab fa-google"></i>
+                            Continue with Google
+                        </button>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div id="signup-form" class="form-content">
+                        <h2>Create Account</h2>
+                        <p class="form-subtitle">Join our community today</p>
+                        
+                        <form class="auth-form">
+                            <div class="form-group">
+                                <label for="name">
+                                    <i class="fas fa-user"></i>
+                                    Full Name
+                                </label>
+                                <input type="text" id="name" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">
+                                    <i class="fas fa-envelope"></i>
+                                    Email Address
+                                </label>
+                                <input type="email" id="email" required placeholder="Enter your email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">
+                                    <i class="fas fa-lock"></i>
+                                    Password
+                                </label>
+                                <input type="password" id="password" required placeholder="Create a password">
+                                <div class="password-requirements">
+                                    <small>Minimum 6 characters with at least one number</small>
+                                </div>
+                            </div>
+                            <button type="button" onclick="signup()" class="btn btn-primary">
+                                <i class="fas fa-user-plus"></i>
+                                Create Account
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Dashboard -->
+            <div id="user-dashboard" class="user-dashboard" style="display: none;">
+                <div class="dashboard-header">
+                    <div class="user-welcome">
+                        <h2>Welcome back!</h2>
+                        <p id="user-name"></p>
+                    </div>
+                    <button onclick="logout()" class="btn btn-outline btn-danger">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
+                </div>
+
+                <div class="dashboard-content">
+                    <div class="user-info-card">
+                        <h3><i class="fas fa-user-circle"></i> Profile Information</h3>
+                        <pre id="user-data" class="user-data"></pre>
+                    </div>
+
+                    <!-- Admin Panel -->
+                    <div id="admin-panel" class="admin-panel" style="display: none;">
+                        <div class="admin-header">
+                            <h3><i class="fas fa-users-cog"></i> Admin Panel</h3>
+                            <button onclick="getAllUsers()" class="btn btn-secondary">
+                                <i class="fas fa-sync-alt"></i>
+                                Refresh Users
+                            </button>
+                        </div>
+                        <div id="users-list" class="users-list"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 TEDx Authentication Portal. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Configuration Modal -->
+    <div id="config-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>API Configuration</h3>
+                <button class="modal-close" onclick="closeConfigModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="api-url">API Base URL</label>
+                    <input type="url" id="api-url" placeholder="https://your-api-domain.com/api">
+                </div>
+                <div class="modal-actions">
+                    <button onclick="saveConfig()" class="btn btn-primary">Save Configuration</button>
+                    <button onclick="closeConfigModal()" class="btn btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Button -->
+    <button id="settings-btn" class="settings-btn" onclick="openConfigModal()">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <script src="deploy-config.js"></script>
+    <script src="env.js"></script>
+    <script src="config.js"></script>
+    <script src="debug.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
